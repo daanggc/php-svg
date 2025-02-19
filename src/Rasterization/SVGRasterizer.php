@@ -81,15 +81,15 @@ class SVGRasterizer
 
         // precompute properties
 
-        $this->docWidth  = Length::convert($docWidth ?: '100%', $width);
-        $this->docHeight = Length::convert($docHeight ?: '100%', $height);
+        $this->docWidth  = (int)Length::convert($docWidth ?: '100%', $width);
+        $this->docHeight = (int)Length::convert($docHeight ?: '100%', $height);
 
-        $scaleX =  $width / (!empty($viewBox) ? $viewBox[2] : $this->docWidth ?? 0);
-        $scaleY =  $height / (!empty($viewBox) ? $viewBox[3] : $this->docHeight ?? 0);
+        $scaleX =  $width / (!empty($viewBox) ? (int)$viewBox[2] : $this->docWidth ?? 0);
+        $scaleY =  $height / (!empty($viewBox) ? (int)$viewBox[3] : $this->docHeight ?? 0);
         $this->diagonalScale = hypot($scaleX, $scaleY) / M_SQRT2;
 
-        $offsetX = !empty($viewBox) ? -($viewBox[0] * $scaleX) : 0;
-        $offsetY = !empty($viewBox) ? -($viewBox[1] * $scaleY) : 0;
+        $offsetX = !empty($viewBox) ? -((int)$viewBox[0] * $scaleX) : 0;
+        $offsetY = !empty($viewBox) ? -((int)$viewBox[1] * $scaleY) : 0;
 
         // the transform stack starts out with a simple viewport transform
         $transform = Transform::identity();
